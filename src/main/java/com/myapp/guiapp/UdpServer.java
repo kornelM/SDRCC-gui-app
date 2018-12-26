@@ -19,10 +19,10 @@ public class UdpServer {
     private DatagramSocket socket;
     private byte[] buf = new byte[65535];
 
-    @Value("${video.server.port}")
+    @Value("${gui.video.server.port}")
     private Integer serverPort;
 
-    @Value("${video.client.inetAddress}")
+    @Value("${gui.video.client.inetAddress}")
     private String inetAddress;
 
     @PostConstruct
@@ -31,18 +31,16 @@ public class UdpServer {
     }
 
     ByteArrayInputStream receiveFrame() {
-        System.out.println("Server is running");
-
         DatagramPacket packet = new DatagramPacket(buf, buf.length);
         try {
             socket.receive(packet);
+            InetAddress address = packet.getAddress();
+            int port = packet.getPort();
+            packet = new DatagramPacket(buf, buf.length, address, port);
         } catch (IOException e) {
+            //TODO add logger
             e.printStackTrace();
         }
-
-        InetAddress address = packet.getAddress();
-        int port = packet.getPort();
-        packet = new DatagramPacket(buf, buf.length, address, port);
 
         return new ByteArrayInputStream(packet.getData());
     }

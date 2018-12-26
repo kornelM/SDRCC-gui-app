@@ -1,20 +1,12 @@
 package com.myapp.guiapp;
 
-import static org.junit.Assert.assertTrue;
-
 import org.junit.Test;
 
-/**
- * Unit test for simple GuiApplication.
- */
-public class GuiApplicationTest
-{
-    /**
-     * Rigorous Test :-)
-     */
+import static org.junit.Assert.assertTrue;
+
+public class GuiApplicationTest {
     @Test
-    public void shouldAnswerWithTrue()
-    {
-        assertTrue( true );
+    public void shouldAnswerWithTrue() {
+        assertTrue(true);
     }
 }

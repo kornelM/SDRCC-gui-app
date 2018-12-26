@@ -4,7 +4,6 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,11 +14,14 @@ import org.springframework.context.ConfigurableApplicationContext;
 @EnableEurekaClient
 public class GuiApplication extends Application {
 
+    private static final Integer SCENE_WIDTH = 800;
+    private static final Integer SCENE_HEIGHT = 600;
+
     private ConfigurableApplicationContext springContext;
     private Parent rootNode;
 
     public static void main(String[] args) {
-       Application.launch(args);
+        Application.launch(args);
     }
 
     @Override
@@ -31,20 +33,16 @@ public class GuiApplication extends Application {
     }
 
     @Override
-    public void start(Stage stage) throws Exception {
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GuiApp.fxml"));
-//        BorderPane rootElement = (BorderPane) loader.load();
-        Scene scene = new Scene(rootNode, 800, 600);
+    public void start(Stage stage) {
+        Scene scene = new Scene(rootNode, SCENE_WIDTH, SCENE_HEIGHT);
         scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
         stage.setScene(scene);
-        stage.show();
-//        primaryStage.setTitle("Video processing");
-//        primaryStage.setScene(scene);
-//        primaryStage.show();
+        stage.show();                    //TODO add logger
+
     }
 
     @Override
-    public void stop() throws Exception {
+    public void stop() {
         springContext.stop();
     }
 }

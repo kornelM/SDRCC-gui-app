@@ -35,13 +35,14 @@ public class GuiApplicationController {
     @FXML
     private ImageView currentFrame;
 
-    private InputStream byteArrayInputStream;
-
-    @Autowired
-    private UdpServer udpServer;
-
+    private final UdpServer udpServer;
     private DatagramSocket socket;
     private byte[] buf = new byte[BUFFER_SIZE];
+
+    @Autowired
+    public GuiApplicationController(UdpServer udpServer) {
+        this.udpServer = udpServer;
+    }
 
     @FXML
     protected void launchWindow() {
@@ -56,12 +57,17 @@ public class GuiApplicationController {
         while (true) {
             try {
                 bufferedImage = ImageIO.read(udpServer.receiveFrame());
+                if(bufferedImage != null){
+                    Image image = SwingFXUtils.toFXImage(bufferedImage, null);
+                    updateImageView(currentFrame, image);
+                } else {
+                    //TODO add logger
+                    System.exit(-1);
+                }
             } catch (IOException e) {
+                //TODO add logger
                 e.printStackTrace();
             }
-
-            Image image = SwingFXUtils.toFXImage(bufferedImage, null);
-            updateImageView(currentFrame, image);
         }
     }
 
