@@ -1,7 +1,7 @@
 eurekaUri: http://127.0.0.1
 eurekaPort: 8761
 server:
-  port: 7777
+  port: 60000
 spring:
   application:
     name: gui-app #current service name to be used by the eureka server
