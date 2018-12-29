@@ -1,8 +1,9 @@
 package com.myapp.guiapp;
 
+import com.myapp.guiapp.udp.UdpServerCarControl;
+import com.myapp.guiapp.udp.UdpServerVideoServer;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -12,10 +13,6 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
 import java.net.DatagramSocket;
 
 @Data
@@ -34,40 +31,49 @@ public class GuiApplicationController {
     private ImageView histogram;
     @FXML
     private ImageView currentFrame;
+    @FXML
+    private ImageView linesFrame;
 
-    private final UdpServer udpServer;
+    private final UdpServerVideoServer udpServerVideoServer;
+    private final UdpServerCarControl udpServerCarControl;
     private DatagramSocket socket;
     private byte[] buf = new byte[BUFFER_SIZE];
 
     @Autowired
-    public GuiApplicationController(UdpServer udpServer) {
-        this.udpServer = udpServer;
+    public GuiApplicationController(UdpServerVideoServer udpServerVideoServer,
+                                    UdpServerCarControl udpServerCarControl) {
+        this.udpServerVideoServer = udpServerVideoServer;
+        this.udpServerCarControl = udpServerCarControl;
     }
 
     @FXML
     protected void launchWindow() {
-        this.currentFrame.setFitWidth(600);
+        this.currentFrame.setFitWidth(300);
         this.currentFrame.setPreserveRatio(true);
-        Thread thread = new Thread((this::receiveImage), "ImageWindowThread");
-        thread.start();
+        this.linesFrame.setFitWidth(300);
+        this.linesFrame.setPreserveRatio(true);
+
+        startImagesThread();
     }
 
-    private void receiveImage() {
-        BufferedImage bufferedImage = null;
+    private void startImagesThread() {
+
+        Thread carControlThread = new Thread((this::getAndUpdateImageCarControl), "Image-Window-Thread");
+        Thread videoServerThread = new Thread((this::getAndUpdateImageVideoServer), "Image-Window-Thread");
+
+        carControlThread.start();
+        videoServerThread.start();
+    }
+
+    private void getAndUpdateImageCarControl() {
         while (true) {
-            try {
-                bufferedImage = ImageIO.read(udpServer.receiveFrame());
-                if(bufferedImage != null){
-                    Image image = SwingFXUtils.toFXImage(bufferedImage, null);
-                    updateImageView(currentFrame, image);
-                } else {
-                    //TODO add logger
-                    System.exit(-1);
-                }
-            } catch (IOException e) {
-                //TODO add logger
-                e.printStackTrace();
-            }
+            updateImageView(currentFrame, new Image(udpServerCarControl.receiveFrame()));
+        }
+    }
+
+    private void getAndUpdateImageVideoServer() {
+        while (true) {
+            updateImageView(linesFrame, new Image(udpServerVideoServer.receiveFrame()));
         }
     }
 
@@ -79,4 +85,3 @@ public class GuiApplicationController {
         Platform.runLater(() -> property.set(value));
     }
 }
-

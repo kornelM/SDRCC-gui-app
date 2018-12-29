@@ -5,24 +5,22 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.myapp.guiapp.GuiApplicationController">
-    <center>
-        <ImageView fx:id="currentFrame" />
-    </center>
-    <right>
-        <VBox alignment="CENTER_LEFT" spacing="10">
-            <padding>
-                <Insets left="10" right="20"/>
-            </padding>
-        </VBox>
-    </right>
+<BorderPane xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.myapp.guiapp.GuiApplicationController">
+
     <bottom>
         <HBox alignment="CENTER">
             <padding>
-                <Insets top="25" right="25" bottom="25" left="25"/>
+                <Insets bottom="25" left="25" right="25" top="25"/>
             </padding>
-            <Button fx:id="button" alignment="center" text="Start receiving" onAction="#launchWindow"/>
+            <Button fx:id="button" alignment="center" onAction="#launchWindow" text="Start receiving"/>
         </HBox>
     </bottom>
+    <right>
+        <ImageView fx:id="currentFrame" BorderPane.alignment="CENTER"/>
+    </right>
+    <left>
+        <ImageView fx:id="linesFrame" BorderPane.alignment="CENTER"/>
+    </left>
+
 </BorderPane>
