@@ -14,9 +14,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 @EnableEurekaClient
 public class GuiApplication extends Application {
 
-    private static final Integer SCENE_WIDTH = 800;
-    private static final Integer SCENE_HEIGHT = 600;
-
     private ConfigurableApplicationContext springContext;
     private Parent rootNode;
 
@@ -34,7 +31,7 @@ public class GuiApplication extends Application {
 
     @Override
     public void start(Stage stage) {
-        Scene scene = new Scene(rootNode, SCENE_WIDTH, SCENE_HEIGHT);
+        Scene scene = new Scene(rootNode);
         scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
         stage.setScene(scene);
         stage.show();                    //TODO add logger

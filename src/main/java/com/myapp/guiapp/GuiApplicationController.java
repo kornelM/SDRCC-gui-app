@@ -6,7 +6,8 @@ import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import lombok.Data;
@@ -22,17 +23,17 @@ public class GuiApplicationController {
     private static final int BUFFER_SIZE = 65535;
 
     @FXML
-    private Button button;
+    private Button startButton;
     @FXML
-    private CheckBox grayscale;
-    @FXML
-    private CheckBox logoCheckBox;
+    private Label thresholdLabel;
     @FXML
     private ImageView histogram;
     @FXML
     private ImageView currentFrame;
     @FXML
     private ImageView linesFrame;
+    @FXML
+    private Slider thresholdSlider;
 
     private final UdpServerVideoServer udpServerVideoServer;
     private final UdpServerCarControl udpServerCarControl;
@@ -48,11 +49,6 @@ public class GuiApplicationController {
 
     @FXML
     protected void launchWindow() {
-        this.currentFrame.setFitWidth(300);
-        this.currentFrame.setPreserveRatio(true);
-        this.linesFrame.setFitWidth(300);
-        this.linesFrame.setPreserveRatio(true);
-
         startImagesThread();
     }
 
@@ -83,5 +79,13 @@ public class GuiApplicationController {
 
     private static <T> void onFXThread(final ObjectProperty<T> property, final T value) {
         Platform.runLater(() -> property.set(value));
+    }
+
+    @FXML
+    public void updateThresholdValue() {
+        thresholdSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            System.out.println("oldvalue: " + oldValue + ", newValue: " + newValue);
+            thresholdLabel.setText(String.valueOf(newValue.intValue()));
+        });
     }
 }
