@@ -1,7 +1,8 @@
 package com.myapp.guiapp;
 
-import com.myapp.guiapp.udp.UdpServerCarControl;
-import com.myapp.guiapp.udp.UdpServerVideoServer;
+import com.myapp.guiapp.communication.udp.UdpServerCarControl;
+import com.myapp.guiapp.communication.udp.UdpServerVideoServer;
+import com.myapp.guiapp.services.VideoServerClient;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.fxml.FXML;
@@ -37,14 +38,18 @@ public class GuiApplicationController {
 
     private final UdpServerVideoServer udpServerVideoServer;
     private final UdpServerCarControl udpServerCarControl;
+    private final VideoServerClient videoServerClient;
+
     private DatagramSocket socket;
     private byte[] buf = new byte[BUFFER_SIZE];
 
     @Autowired
     public GuiApplicationController(UdpServerVideoServer udpServerVideoServer,
-                                    UdpServerCarControl udpServerCarControl) {
+                                    UdpServerCarControl udpServerCarControl,
+                                    VideoServerClient videoServerClient) {
         this.udpServerVideoServer = udpServerVideoServer;
         this.udpServerCarControl = udpServerCarControl;
+        this.videoServerClient = videoServerClient;
     }
 
     @FXML
@@ -84,8 +89,8 @@ public class GuiApplicationController {
     @FXML
     public void updateThresholdValue() {
         thresholdSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("oldvalue: " + oldValue + ", newValue: " + newValue);
             thresholdLabel.setText(String.valueOf(newValue.intValue()));
+            videoServerClient.setThresholdValue(String.valueOf(newValue.intValue()));
         });
     }
 }
