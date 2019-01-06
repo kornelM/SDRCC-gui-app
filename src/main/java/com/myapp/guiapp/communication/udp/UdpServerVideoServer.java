@@ -1,4 +1,4 @@
-package com.myapp.guiapp.udp;
+package com.myapp.guiapp.communication.udp;
 
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,23 +14,23 @@ import java.net.UnknownHostException;
 
 @Getter
 @Component
-public class UdpServerCarControl {
+public class UdpServerVideoServer {
 
     private static final int BUFFER_SIZE = 65535;
 
-    @Value("${gui.video.carControlApp.port}")
+    @Value("${gui.video.videoServerApp.port}")
     private Integer serverPort;
 
-    @Value("${gui.video.carControlApp.inetAddress}")
+    @Value("${gui.video.videoServerApp.address}")
     private String inetAddress;
 
+    private byte[] buf = new byte[BUFFER_SIZE];
     private DatagramSocket socket;
-    private final byte[] buf = new byte[BUFFER_SIZE];
     private final UdpServer udpServer;
     private final InetAddress addressGui;
 
     @Autowired
-    public UdpServerCarControl(UdpServer udpServer) throws UnknownHostException {
+    public UdpServerVideoServer(UdpServer udpServer) throws UnknownHostException {
         this.udpServer = udpServer;
         this.addressGui = InetAddress.getByName(inetAddress);
     }
