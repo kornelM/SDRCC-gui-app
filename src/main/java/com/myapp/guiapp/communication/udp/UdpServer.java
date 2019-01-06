@@ -1,4 +1,4 @@
-package com.myapp.guiapp.udp;
+package com.myapp.guiapp.communication.udp;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
