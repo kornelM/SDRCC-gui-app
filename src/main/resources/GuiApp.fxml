@@ -28,7 +28,7 @@
          <children>
             <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="89.0" text="Threshold" GridPane.columnIndex="2" />
             <Slider fx:id="thresholdSlider" blockIncrement="1.0" max="500.0" onDragDetected="#updateThresholdValue" value="250.0" />
-            <Label fx:id="thresholdLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="16.0" prefWidth="40.0" text="150" textAlignment="CENTER" GridPane.columnIndex="1" />
+            <Label fx:id="thresholdLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="16.0" prefWidth="40.0" text="250" textAlignment="CENTER" GridPane.columnIndex="1" />
          </children>
       </GridPane>
       <GridPane layoutX="557.0" layoutY="14.0" prefHeight="473.0" prefWidth="629.0">
