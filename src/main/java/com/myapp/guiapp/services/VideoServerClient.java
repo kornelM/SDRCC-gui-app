@@ -14,12 +14,27 @@ public class VideoServerClient {
         this.videoServerRestClient = videoServerRestClient;
     }
 
-    public void setThresholdBottomValue(String newValue){
+    public void setThresholdBottomValue(String newValue) {
         videoServerRestClient.put("/gui/threshold/bottom", newValue);
     }
 
-    public void setThresholdTopValue(String newValue){
+    public void setThresholdTopValue(String newValue) {
         videoServerRestClient.put("/gui/threshold/bottom", newValue);
     }
 
+    public void setHoughLinesPThresholdValue(String newValue) {
+        videoServerRestClient.put("/gui/threshold/houghLinesP", newValue);
+    }
+
+    public void setMinLineLengthValue(String newValue) {
+        videoServerRestClient.put("/gui/minLineLength", newValue);
+    }
+
+    public void setMaxLineGapValue(String newValue) {
+        videoServerRestClient.put("/gui/maxLineGap", newValue);
+    }
+
+    public void setRhoValue(String newValue) {
+        videoServerRestClient.put("/gui/rho", newValue);
+    }
 }

@@ -12,6 +12,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import lombok.Data;
+import org.apache.commons.math3.util.Precision;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,6 +24,22 @@ public class GuiApplicationController {
 
     private static final int BUFFER_SIZE = 65535;
 
+    @FXML
+    public Slider houghLinesPThresholdSlider;
+    @FXML
+    public Label houghLinesPThresholdLabel;
+    @FXML
+    public Slider minLineLengthSlider;
+    @FXML
+    public Label minLineLengthLabel;
+    @FXML
+    public Slider maxLineGapSlider;
+    @FXML
+    public Label maxLineGapLabel;
+    @FXML
+    public Slider rhoSlider;
+    @FXML
+    public Label rhoLabel;
     @FXML
     private Button startButton;
     @FXML
@@ -103,6 +120,38 @@ public class GuiApplicationController {
         thresholdTopSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             thresholdTopLabel.setText(String.valueOf(newValue.intValue()));
             videoServerClient.setThresholdTopValue(String.valueOf(newValue.intValue()));
+        });
+    }
+
+    @FXML
+    public void updateHoughLinesPThresholdValue() {
+        houghLinesPThresholdSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            houghLinesPThresholdLabel.setText(String.valueOf(newValue.intValue()));
+            videoServerClient.setHoughLinesPThresholdValue(String.valueOf(newValue.intValue()));
+        });
+    }
+
+    @FXML
+    public void updateMinLineLengthValue() {
+        minLineLengthSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            minLineLengthLabel.setText(String.valueOf(newValue.intValue()));
+            videoServerClient.setMinLineLengthValue(String.valueOf(newValue.intValue()));
+        });
+    }
+
+    @FXML
+    public void updateMaxLineGapValue() {
+        maxLineGapSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            maxLineGapLabel.setText(String.valueOf(newValue.intValue()));
+            videoServerClient.setMaxLineGapValue(String.valueOf(newValue.intValue()));
+        });
+    }
+
+    @FXML
+    public void updateRhoValue() {
+        rhoSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            rhoLabel.setText(String.valueOf(Precision.round(newValue.doubleValue(), 1)));
+            videoServerClient.setRhoValue(String.valueOf(Precision.round(newValue.doubleValue(), 1)));
         });
     }
 }
