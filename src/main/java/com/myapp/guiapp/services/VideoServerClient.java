@@ -14,8 +14,12 @@ public class VideoServerClient {
         this.videoServerRestClient = videoServerRestClient;
     }
 
-    public void setThresholdValue(String newValue){
-        videoServerRestClient.put("/gui/threshold", newValue);
+    public void setThresholdBottomValue(String newValue){
+        videoServerRestClient.put("/gui/threshold/bottom", newValue);
+    }
+
+    public void setThresholdTopValue(String newValue){
+        videoServerRestClient.put("/gui/threshold/bottom", newValue);
     }
 
 }

@@ -26,7 +26,9 @@ public class GuiApplicationController {
     @FXML
     private Button startButton;
     @FXML
-    private Label thresholdLabel;
+    private Label thresholdBottomLabel;
+    @FXML
+    private Label thresholdTopLabel;
     @FXML
     private ImageView histogram;
     @FXML
@@ -34,7 +36,9 @@ public class GuiApplicationController {
     @FXML
     private ImageView linesFrame;
     @FXML
-    private Slider thresholdSlider;
+    private Slider thresholdBottomSlider;
+    @FXML
+    private Slider thresholdTopSlider;
 
     private final UdpServerVideoServer udpServerVideoServer;
     private final UdpServerCarControl udpServerCarControl;
@@ -87,10 +91,18 @@ public class GuiApplicationController {
     }
 
     @FXML
-    public void updateThresholdValue() {
-        thresholdSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
-            thresholdLabel.setText(String.valueOf(newValue.intValue()));
-            videoServerClient.setThresholdValue(String.valueOf(newValue.intValue()));
+    public void updateThresholdBottomValue() {
+        thresholdBottomSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            thresholdBottomLabel.setText(String.valueOf(newValue.intValue()));
+            videoServerClient.setThresholdBottomValue(String.valueOf(newValue.intValue()));
+        });
+    }
+
+    @FXML
+    public void updateThresholdTopValue() {
+        thresholdTopSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            thresholdTopLabel.setText(String.valueOf(newValue.intValue()));
+            videoServerClient.setThresholdTopValue(String.valueOf(newValue.intValue()));
         });
     }
 }
