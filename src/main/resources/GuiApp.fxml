@@ -95,7 +95,7 @@
                     blockIncrement="1.0"
                     max="250.0"
                     onDragDetected="#updateHoughLinesPThresholdValue"
-                    value="150.0"
+                    value="100.0"
                     GridPane.columnIndex="0"
                     GridPane.rowIndex="2"/>
 
@@ -104,7 +104,7 @@
                    contentDisplay="CENTER"
                    prefHeight="16.0"
                    prefWidth="40.0"
-                   text="150"
+                   text="100"
                    textAlignment="CENTER"
                    GridPane.columnIndex="1"
                    GridPane.rowIndex="2"/>
@@ -116,7 +116,7 @@
                    GridPane.rowIndex="2">
                 <tooltip>
                     <Tooltip
-                            text="Slide a cursor to change value of threshold in hough lines detection&#xD;The Hough transform is a feature extraction technique used in image analysis,&#xD;computer vision, and digital image processing."
+                            text="Slide a cursor to change value of threshold in hough lines detection&#xD;Threshold is a minimum number of votes needed to accept a candidate line.&#xD;The Hough transform is a feature extraction technique used in image analysis,&#xD;computer vision, and digital image processing."
                             style="-fx-size: 18px;"/>
                 </tooltip>
             </Label>
